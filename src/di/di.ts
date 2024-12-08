@@ -1,6 +1,5 @@
-const TYPES = {
-    TestService: Symbol.for('PostService'),
-    TodoRepository: Symbol.for('PostRepository'),
+const Di = {
+    TodoRepository: 'todoRepository',
 };
   
-export { TYPES };
+export { Di };

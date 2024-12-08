@@ -1,10 +1,7 @@
 import { createRoute, RouteHandler, z } from "@hono/zod-openapi";
 import { Todo, TodoListSchema, TodoSchema } from "../../response/todo";
 import { ErrorResponse } from "../../response/error";
-import { env } from "hono/adapter";
-import { Context } from "hono";
-import { TYPES } from "../../di/di";
-import { ITodoRepository, TodoRepository } from "../../repositories/todoRepository";
+import { HonoEnv } from "../..";
 
 // OpenAPI definition
 export const getTodosRoute = createRoute({
@@ -32,11 +29,10 @@ export const getTodosRoute = createRoute({
 })
 
 
-export const getTodosHandler: RouteHandler<typeof getTodosRoute, {}> = async (c: Context) => {
+export const getTodosHandler: RouteHandler<typeof getTodosRoute, HonoEnv> = async (c) => {
   try {
-    const todoRepository: TodoRepository = c.get('todoRepository');
+    const todoRepository = c.get('todoRepository');
     const todos: Todo[] = todoRepository.getTodos();
-
     return c.json(todos, 200);
   } catch (e) {
     console.error(e);

@@ -6,15 +6,20 @@ import { ITodoRepository } from './repositories/todoRepository';
 import { OpenAPIHono } from '@hono/zod-openapi';
 
 
-const app = new OpenAPIHono<{
-  Variables: {
-    diContainer: typeof diContainer;
-    postService: ITodoRepository;
-  },
-  Env: {
-    foo: string
-  }
-}>();
+type Variables = {
+  diContainer: typeof diContainer;
+  todoRepository : ITodoRepository;
+}
+
+type Bindings = {
+}
+
+export type HonoEnv = {
+  Bindings: Bindings;
+  Variables: Variables;
+};
+
+const app = new OpenAPIHono<HonoEnv>();
 
 app.use('*', injectDependencies);
 
