@@ -11,7 +11,8 @@ type Variables = {
   todoRepository : ITodoRepository;
 }
 
-type Bindings = {
+export type Bindings = {
+  URL: string
 }
 
 export type HonoEnv = {
